@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-intercept-bo
+  labels:
+    app: test-intercept-bo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-intercept-bo
+  template:
+    metadata:
+      labels:
+        app: test-intercept-bo
+    spec:
+      containers:
+      - name: bo
+        image: xavierbalesi/k8sintercept-exp-bo:main
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: message-volume
+          mountPath: /tmp/message.txt
+          subPath: message.txt
+      volumes:
+      - name: message-volume
+        configMap:
+          name: message-cm

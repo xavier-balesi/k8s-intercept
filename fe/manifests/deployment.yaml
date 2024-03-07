@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-intercept-fe
+  labels:
+    app: test-intercept-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-intercept-fe
+  template:
+    metadata:
+      labels:
+        app: test-intercept-fe
+    spec:
+      containers:
+      - name: fe
+        image: xavierbalesi/k8sintercept-exp-fe:main
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: BO_SVC
+          value: test-intercept-bo-svc
+        - name: BO_PORT
+          value: '80'

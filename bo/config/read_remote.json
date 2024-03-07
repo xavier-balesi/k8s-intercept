@@ -1,0 +1,8 @@
+{
+    "feature": {
+        "fs": {
+            "mode": "read",
+            "read_only": ["message.txt"]
+        }
+    }
+}
